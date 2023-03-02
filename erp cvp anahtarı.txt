@@ -1,0 +1,367 @@
+
+
+entityframework indir 
+public class Kategori 
+
+ { 
+
+
+
+
+
+
+
+ public int KategoriId { get; set; } 
+public string KategoriAdi { get; set; } 
+public List<Urun> uruns { get; set; } 
+
+
+
+ } 
+
+} 
+
+public class Urun 
+
+ { 
+
+ public int UrunId { get; set; } 
+
+ public string UrunAd { get; set; } 
+
+ public int UrunStok { get; set; } 
+
+ public decimal UrunFiyat { get; set; } 
+
+
+
+ public int KategoriId { get; set; } 
+
+
+
+ public Kategori Kategori { get; set; } 
+
+
+
+ public List<Satis> Satis { get; set; } 
+
+ } 
+
+public class Satis 
+
+ { 
+
+ public int SatisId { get; set; } 
+
+ public int SatisAdeti { get; set; } 
+
+ public decimal ToplamFiyat { get; set; } 
+
+
+
+ public int UrunId { get; set; } 
+
+
+
+ public Urun Urun { get; set; } 
+
+
+
+ } 
+
+<connectionStrings> 
+
+<add name="connection" connectionString="server=.;database=ErpDb;integrated security=true;" 
+providerName="System.Data.SqlClient"/>
+
+
+
+</connectionStrings> 
+
+public class Context:DbContext 
+
+ { 
+
+
+
+
+
+public Context() : base("connection") { }
+public DbSet<Kategori> kategoris { get; set; } 
+public DbSet<Urun> uruns { get; set; } 
+public DbSet<Satis> Satis { get; set; } 
+
+
+
+ } 
+
+Enable-MigrationsAdd-migration denemeUpdate-database 
+
+
+
+
+
+
+
+
+
+
+public Configuration() 
+
+ { 
+
+ AutomaticMigrationsEnabled = true; 
+
+ } 
+
+
+
+internal class Program 
+
+ { 
+
+ static void Main(string[] args) 
+
+ { 
+
+ var _context = new Context(); 
+
+ var kategori=new Kategori(); 
+
+ var urun = new Urun(); 
+
+ var satis = new Satis(); 
+
+ X: 
+
+ Console.Clear(); 
+
+ Console.WriteLine("Satýþ Takip Programý"); 
+
+ Console.WriteLine("--------------------"); 
+
+ Console.WriteLine("Anamenu"); 
+
+ Console.WriteLine("--------------------"); 
+
+ Console.WriteLine("Kategori Listele [1]"); 
+
+ Console.WriteLine("Kategori Ekle [2]"); 
+
+ Console.WriteLine("Kategori Güncelle [3]"); 
+
+ Console.WriteLine("Kategori Sil [4]"); 
+
+ Console.WriteLine("Ürün Listele [5]"); 
+
+ Console.WriteLine("Ürün Ekle [6]"); 
+
+ Console.WriteLine("Ürün Güncelle [7]"); 
+
+ Console.WriteLine("Ürün Sil [8]"); 
+
+ Console.WriteLine("Satýþ Listele [9]"); 
+
+ Console.WriteLine("Satýþ Ekle [10]"); 
+
+ Console.WriteLine("Çýkýþ [0]"); 
+
+ Console.Write("Seçiminizi Belirtiniz: "); 
+
+ int Secim = Convert.ToInt16(Console.ReadLine()); 
+
+ Console.Clear(); 
+
+ switch(Secim) 
+
+ { 
+
+ case 1: 
+
+ foreach(var item in _context.kategoris) 
+
+ { 
+
+ Console.WriteLine(item.KategoriId+")"+item.KategoriAdi); 
+
+ } 
+
+ Console.ReadKey(); 
+
+ goto X; 
+
+ case 2: 
+
+ Console.WriteLine("Kategori Adýný Giriniz:"); 
+
+ kategori.KategoriAdi=Console.ReadLine(); 
+
+ _context.kategoris.Add(kategori); 
+
+ _context.SaveChanges(); 
+
+ goto X; 
+
+ case 3: 
+
+ Console.WriteLine("Kategori Ýd giriniz:"); 
+
+ kategori.KategoriId = Convert.ToInt32( Console.ReadLine()); 
+
+ Console.WriteLine("Kategori Adýný Giriniz:"); 
+
+ kategori.KategoriAdi = Console.ReadLine(); 
+
+ _context.kategoris.AddOrUpdate(kategori); 
+
+ _context.SaveChanges(); 
+
+ goto X; 
+
+ case 4: 
+
+ Console.WriteLine("Kategori Ýd giriniz:"); 
+
+ int b = Convert.ToInt32(Console.ReadLine()); 
+
+ var sil = _context.kategoris.Find(b); 
+
+ _context.kategoris.Remove(sil); 
+
+
+ _context.SaveChanges(); 
+
+ goto X; 
+
+ case 5: 
+
+ foreach (var item in _context.uruns) 
+
+ { 
+
+ Console.WriteLine(item.UrunId + ")" + 
+item.UrunAd+"Stok:"+item.UrunStok+"Ürün Fiyatý:"+item.UrunFiyat 
+
+ +"Kategori Ýd:"+item.KategoriId); 
+
+ } 
+
+ Console.ReadKey(); 
+
+ goto X; 
+
+ case 6: 
+
+ Console.WriteLine("Urun Adýný Giriniz:"); 
+
+ urun.UrunAd = Console.ReadLine(); 
+
+ Console.WriteLine("Urun Stok Giriniz:"); 
+
+ urun.UrunStok =Convert.ToInt32(Console.ReadLine()); 
+
+ Console.WriteLine("Urun Fiyatý Giriniz:"); 
+
+ urun.UrunFiyat = Convert.ToDecimal(Console.ReadLine()); 
+
+ Console.WriteLine("Kategori id Giriniz:"); 
+
+ urun.KategoriId = Convert.ToInt32(Console.ReadLine()); 
+
+ _context.uruns.Add(urun); 
+
+ _context.SaveChanges(); 
+
+ goto X; 
+
+ case 7: 
+
+ Console.WriteLine("Ürün Ýd giriniz:"); 
+
+ urun.UrunId = Convert.ToInt32(Console.ReadLine()); 
+
+ Console.WriteLine("Urun Adýný Giriniz:"); 
+
+ urun.UrunAd = Console.ReadLine(); 
+
+ Console.WriteLine("Urun Stok Giriniz:"); 
+
+ urun.UrunStok = Convert.ToInt32(Console.ReadLine()); 
+
+ Console.WriteLine("Urun Adýný Giriniz:"); 
+
+ urun.UrunFiyat = Convert.ToDecimal(Console.ReadLine()); 
+
+ Console.WriteLine("Kategori id Giriniz:"); 
+
+ urun.KategoriId = Convert.ToInt32(Console.ReadLine()); 
+
+ _context.uruns.AddOrUpdate(urun); 
+
+ _context.SaveChanges(); 
+
+ goto X; 
+
+ case 8: 
+
+ Console.WriteLine("Ürün Ýd giriniz:"); 
+
+ int a = Convert.ToInt32(Console.ReadLine()); 
+
+ var silu = _context.uruns.Find(a); 
+
+ _context.uruns.Remove(silu); 
+
+ _context.SaveChanges(); 
+
+ goto X; 
+
+ case 9: 
+
+ foreach (var item in _context.Satis) 
+
+ { 
+
+ Console.WriteLine(item.SatisId + ")" + "Satýþ Adeti:" + 
+item.SatisAdeti + "Toplam Fiyat:" + item.ToplamFiyat); 
+
+ } 
+
+ Console.ReadKey(); 
+
+ goto X; 
+
+ case 10: 
+
+ Console.WriteLine("Ürün Ýd giriniz:"); 
+
+ satis.UrunId = Convert.ToInt32(Console.ReadLine()); 
+
+ Console.WriteLine("Satis Adetini Giriniz:"); 
+
+ satis.SatisAdeti = Convert.ToInt32(Console.ReadLine()); 
+
+ var urunb = _context.uruns.Find(satis.UrunId); 
+
+ satis.ToplamFiyat = satis.SatisAdeti * urunb.UrunFiyat; 
+
+ urunb.UrunStok = urunb.UrunStok - satis.SatisAdeti; 
+
+ _context.Satis.Add(satis); 
+
+ _context.SaveChanges(); 
+
+ goto X; 
+
+
+ case 0: 
+
+ break; 
+
+ default: 
+
+ goto X; 
+
+ } 
+
+
