@@ -95,7 +95,7 @@ public DbSet<Satis> Satis { get; set; }
 
  } 
 
-Enable-MigrationsAdd-migration denemeUpdate-database 
+Enable-Migrations Add-migration deneme Update-database 
 
 
 
