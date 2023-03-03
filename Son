@@ -51,7 +51,7 @@ public class Context : DbContext
 providerName="System.Data.SqlClient"/>
 </connectionStrings>
 
-Data Source=11.11.9.12,1433;User Id=sa;Password=1234; Initial Catalog = SinavDb;Trusted_Connection=False;
+Gerekirse diye--> Data Source=11.11.9.12,1433;User Id=sa;Password=1234; Initial Catalog = SinavDb;Trusted_Connection=False;
 //-----------------------------------------------------------
 
 <connectionStrings>
